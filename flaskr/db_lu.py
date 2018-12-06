@@ -2,10 +2,10 @@ import os
 
 from flask import Flask
 from flask import current_app, g
+import db
 
 # TODO:
 # get_db function with tear_down function and base boilerplate
-# create own project with git repo
 # formulate task(s)
 
 
@@ -16,9 +16,9 @@ def create_app(test_config=None):
     if test_config is None:
         # load the instance config, if it exists, when not testing
         try:
-            app.config.from_pyfile('config.cfg', silent=False)
+            app.config.from_pyfile('../../config.cfg', silent=False)
         except FileNotFoundError:
-            print("You need to provide a config.cfg file in the instance folder.")
+            print("\t===> You need to provide a config.cfg file outside your flaskr folder.")
             app.config.from_mapping(
                 DATABASE_NAME='your_db',
                 USER='your_user',
@@ -44,7 +44,8 @@ def create_app(test_config=None):
     @app.route('/start', methods=('GET', 'POST'))
     def start():
         print(current_app.config['DATABASE_NAME'], )
-
+        cur = db.get_db()
+        print(cur)
         html = '<html><head><title="wow"></head>' \
                '<body>' \
                '<h1>a list of db entries</h1>' \
