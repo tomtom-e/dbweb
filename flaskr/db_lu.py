@@ -44,8 +44,9 @@ def create_app(test_config=None):
     @app.route('/start', methods=('GET', 'POST'))
     def start():
         print(current_app.config['DATABASE_NAME'], )
-        cur = db.get_db()
-        print(cur)
+        # this is your db connection - now go ahead with it...
+        conn = db.get_db()
+
         html = '<html><head><title="wow"></head>' \
                '<body>' \
                '<h1>a list of db entries</h1>' \

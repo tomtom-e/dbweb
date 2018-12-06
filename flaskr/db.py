@@ -14,17 +14,16 @@ def get_db():
                                 current_app.config['PWD'],
                                 ))
         g.conn = conn
-        g.cur = conn.cursor()
 
-    return g.cur
+    return g.conn
 
 
 def close_db(e=None):
-    cur = g.pop('cur', None)
-    if cur is not None:
-        print("Closing cursor")
-        cur.close()
     conn = g.pop('conn', None)
     if conn is not None:
+        cur = conn.cursor()
+        if cur is not None:
+            print("Closing cursor")
+            cur.close()
         print("Closing connection")
         conn.close()
